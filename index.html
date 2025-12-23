@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Awareness Campaign</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="loader-text" data-lang="loading">Loading...</div>
+    </div>
+
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <button class="lang-btn active" onclick="changeLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="changeLanguage('ar')">AR</button>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+    <!-- Main Content -->
+    <main class="maincontainer" id="mainPage">
+        <nav class="navbar">
+            <div class="navitem active" data-lang="nav-home">Home</div>
+            <div class="navitem" onclick="showSection('contact')" data-lang="nav-contact">Contact Us</div>
+            <div class="navitem" onclick="showSection('gallery')" data-lang="nav-gallery">Gallery</div>
+            <div class="navitem" onclick="showSection('login')" data-lang="nav-login">Login</div>
+        </nav>
+
+        <header class="heroheader">
+            <h1 class="herotitle" data-lang="hero-title">Drugs Don't Just Change Your Life — They Take It.</h1>
+        </header>
+        
+        <section class="awarenesssection">
+            <div class="awarenesstexts">
+                <div>
+                    <h1 class="sectiontitle" data-lang="awareness-title1">Drug Awareness</h1>
+                    <h1 class="sectiontitle redtext" data-lang="awareness-title2">Matters</h1>
+                </div>
+                <p class="sectiondesc">
+                    <span data-lang="awareness-desc-short">Drug use affects more than just the individual. It impacts mental and physical health, relationships, education, and future opportunities.</span>
+                    <span class="read-more-text" id="readMoreText">
+                        <span data-lang="awareness-desc-long"> Many people underestimate how quickly experimentation can turn into dependency. Understanding the risks is the first step toward making safer choices. The effects can be long-lasting and affect every aspect of your life.</span>
+                    </span>
+                    <button class="read-more-btn" onclick="toggleReadMore()" id="readMoreBtn" data-lang="read-more">Read More</button>
+                </p>
+            </div>
+            <div class="awarenessimage"></div>
+        </section>
+
+        <!-- Image Slider -->
+        <section class="contentsection">
+            <h1 class="sectiontitle" data-lang="slider-title">Awareness <span class="redtext">Gallery</span></h1>
+            <div class="slider-container">
+                <button class="slider-btn prev" onclick="changeSlide(-1)">❮</button>
+                <div class="slider" id="slider"></div>
+                <button class="slider-btn next" onclick="changeSlide(1)">❯</button>
+            </div>
+        </section>
+
+        <!-- Facts Section -->
+        <section class="contentsection">
+            <div class="centeredheader">
+                <h1 class="sectiontitle" data-lang="facts-title">Important <span class="redtext">Facts</span></h1>
+            </div>
+            <div class="cardsgrid" id="factsgrid"></div>
+        </section>
+
+        <!-- Random Fact -->
+        <div class="random-fact-container">
+            <h2 class="random-fact-title" data-lang="random-title">Did You Know?</h2>
+            <p class="random-fact-text" id="randomFactText"></p>
+            <button class="refresh-btn" onclick="displayRandomFact()" data-lang="new-fact">New Fact</button>
+        </div>
+
+        <footer class="mainfooter">
+            <h1 class="footerphone">1-800-662-4357</h1>
+            <p data-lang="footer-text">SAMHSA National Helpline — Free treatment referral and information service</p>
+        </footer>
+    </main>
+
+    <!-- Contact Page -->
+    <section class="contact-section hidden" id="contactPage">
+        <h1 class="sectiontitle" data-lang="contact-title"><span class="redtext">Contact</span> Us</h1>
+        <div class="contact-form">
+            <div class="success-msg" id="successMsg" data-lang="success-msg">Message sent successfully!</div>
+            <form id="contactForm" onsubmit="return validateForm(event)">
+                <div class="form-group">
+                    <label data-lang="form-name">Name *</label>
+                    <input type="text" id="name" name="name">
+                    <div class="error" id="nameError"></div>
+                </div>
+                <div class="form-group">
+                    <label data-lang="form-email">Email *</label>
+                    <input type="email" id="email" name="email">
+                    <div class="error" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label data-lang="form-message">Message *</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                    <div class="error" id="messageError"></div>
+                </div>
+                <button type="submit" class="primarybtn" data-lang="form-submit">Send Message</button>
+                <button type="button" class="primarybtn" onclick="showSection('main')" style="margin-left: 10px;" data-lang="form-back">Back</button>
+            </form>
+        </div>
+        <div class="messages-container" style="margin-top: 40px;">
+            <h2 class="sectiontitle" style="font-size: 36px; text-align: center; margin-bottom: 20px;" data-lang="messages-title">Received Messages</h2>
+            <div class="messages-table" id="messagesTable"></div>
+        </div>
+    </section>
+
+    <!-- Gallery Page -->
+    <section class="contentsection hidden" id="galleryPage">
+        <h1 class="sectiontitle" data-lang="gallery-title">Image <span class="redtext">Gallery</span></h1>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <button class="primarybtn" onclick="showSection('main')" data-lang="form-back">Back to Home</button>
+        
+        <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+            <button class="lightbox-close">×</button>
+            <img class="lightbox-content" id="lightboxImg">
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section class="login-section hidden" id="loginPage">
+        <div class="login-container">
+            <h1 class="sectiontitle" style="font-size: 36px; text-align: center; margin-bottom: 30px;" data-lang="login-title">Login</h1>
+            <div class="user-cards">
+                <div class="user-card" onclick="selectUser('male')" id="maleCard">
+                    <div class="user-icon">👨</div>
+                    <h3 data-lang="male">Male</h3>
+                </div>
+                <div class="user-card" onclick="selectUser('female')" id="femaleCard">
+                    <div class="user-icon">👩</div>
+                    <h3 data-lang="female">Female</h3>
+                </div>
+            </div>
+            <form id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label data-lang="username">Username *</label>
+                    <input type="text" id="username" name="username">
+                    <div class="error" id="usernameError"></div>
+                </div>
+                <div class="form-group">
+                    <label data-lang="password">Password *</label>
+                    <input type="password" id="password" name="password">
+                    <div class="error" id="passwordError"></div>
+                </div>
+                <button type="submit" class="primarybtn" style="width: 100%;" data-lang="login-btn">Login</button>
+                <button type="button" class="primarybtn" onclick="showSection('main')" style="width: 100%; margin-top: 10px;" data-lang="form-back">Back</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Theme Toggle Button -->
+    <button class="themebutton" id="themebutton" onclick="toggleTheme()">
+        <span id="themeicon">🌙</span>
+    </button>
+    
+    <script src="script.js"></script>
+</body>
+</html>
